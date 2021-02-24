@@ -180,7 +180,7 @@ class DataSet(object):
 # 函数DataSet.next_batch()是用于获取以batch_size为大小的一个元组，
 # 其中包含了一组图片和标签，该元组会被用于当前的TensorFlow运算会话中。
 def read_data_sets(train_dir, fake_data=False, one_hot=False, dtype=tf.float32):
-    class DataSets(object):
+    class DataSets(object): #空函数
         pass
     data_sets = DataSets()
     if fake_data:
