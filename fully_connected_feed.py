@@ -8,6 +8,14 @@ import tensorflow as tf
 import mnist
 import input_data
 
+# batch_size = {int} 100
+# fake_data = {bool} False
+# hidden1 = {int} 128
+# hidden2 = {int} 32
+# input_data_dir = {str} 'MNIST_data'
+# learning_rate = {float} 0.01
+# log_dir = {str} './tmp'
+# max_steps = {int} 2000
 FLAGS = None
 #做完这些基本的操作之后我们就可以对其进行迭代训练了，但是在迭代训练之前我们得处理一下我们的输入数据，
 # 之前我们一直都是用tf.placeholder来假装我们有输入数据，现在我们需要将真实数据传入进来：
@@ -23,6 +31,8 @@ def placeholder_inputs(batch_size):
 #fill_feed_dict函数输入是数据，图像placeholder的变量名称，和标签placeholder的变量名称，
 # 返回一个字典，即需要传入到会话图中的数据。再接着就可以对其进行迭代训练：
 def fill_feed_dict(data_set, images_pl, labels_pl):
+    # 函数DataSet.next_batch()是用于获取以batch_size为大小的一个元组，其中包含了一组图片和标签，
+    # 该元组会被用于当前的TensorFlow运算会话中。             100            False
     images_feed, labels_feed = data_set.next_batch(FLAGS.batch_size,FLAGS.fake_data)
     feed_dict = {images_pl: images_feed,labels_pl: labels_feed}
     return feed_dict
