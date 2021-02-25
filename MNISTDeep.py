@@ -85,6 +85,7 @@ correct_prediction = tf.equal(tf.argmax(y,1), tf.argmax(y_,1))
 # 例如：[True, False, True, True]变为[1,0,1,1]，计算出平均值为0.75。
 accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
 # 最后，我们可以计算出在测试数据上的准确率，大概是91%。
+print("================梯度递减训练结果==================")
 print(accuracy.eval(feed_dict={x: mnist.test.images, y_: mnist.test.labels}))
 
 # 构建一个多层卷积网络
@@ -114,9 +115,9 @@ def conv2d(x, W):
 
 def max_pool_2x2(x):
     return tf.nn.max_pool(x, ksize=[1, 2, 2, 1],
-                          strides=[1, 2, 2, 1], padding='SAME')
+                             strides=[1, 2, 2, 1], padding='SAME')
 
-# 第一层卷积
+# 2.1.第一层卷积
 # 现在我们可以开始实现第一层了。
 # 它由一个卷积接一个max pooling完成。卷积在每个5x5的patch中算出32个特征。
 # 卷积的权重张量形状是[5, 5, 1, 32]，
@@ -133,7 +134,7 @@ x_image = tf.reshape(x, [-1,28,28,1])
 h_conv1 = tf.nn.relu(conv2d(x_image, W_conv1) + b_conv1)
 h_pool1 = max_pool_2x2(h_conv1)
 
-# 第二层卷积
+# 2.2.第二层卷积
 # 为了构建一个更深的网络，我们会把几个类似的层堆叠起来。
 # 第二层中，每个5x5的patch会得到64个特征。
 W_conv2 = weight_variable([5, 5, 32, 64])

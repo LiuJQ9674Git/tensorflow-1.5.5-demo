@@ -2,6 +2,9 @@ import tensorflow as tf
 import input_data
 mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
 
+print(mnist)
+print(mnist.train.images.shape)
+print(mnist.train.labels.shape)
 #我们通过操作符号变量来描述这些可交互的操作单元，可以用下面的方式创建一个：
 x = tf.placeholder("float", [None, 784])
 
