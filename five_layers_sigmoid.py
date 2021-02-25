@@ -41,7 +41,10 @@ cross_entropy = tf.reduce_mean(cross_entropy)*100
 correct_prediction = tf.equal(tf.argmax(Y, 1), tf.argmax(Y_, 1))
 accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 learning_rate = 0.003
+
+# 没有调试通过
 train_step = tf.train.AdamOptimizer(learning_rate).minimize(cross_entropy)
+
 tf.scalar_summary("cost", cross_entropy)
 tf.scalar_summary("accuracy", accuracy)
 summary_op = tf.merge_all_summaries()

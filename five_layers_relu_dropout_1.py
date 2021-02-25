@@ -29,7 +29,7 @@ W4 = tf.Variable(tf.truncated_normal([N, O], stddev=0.1))
 B4 = tf.Variable(tf.ones([O])/10)
 W5 = tf.Variable(tf.truncated_normal([O, 10], stddev=0.1))
 B5 = tf.Variable(tf.zeros([10]))
-
+# 数据格式转换
 XX = tf.reshape(X, [-1, 28*28])
 
 Y1 = tf.nn.relu(tf.matmul(XX, W1) + B1)
@@ -74,11 +74,16 @@ with tf.Session() as sess:
             max_learning_rate = 0.003
             min_learning_rate = 0.0001
             decay_speed = 2000 
-            learning_rate = min_learning_rate + (max_learning_rate - min_learning_rate) * math.exp(-i/decay_speed)
-            _, summary = sess.run([train_step, summary_op], {X: batch_x, Y_: batch_y, pkeep: 0.75, lr: learning_rate})
+            learning_rate = min_learning_rate +\
+                            (max_learning_rate - min_learning_rate) * \
+                            math.exp(-i/decay_speed)
+            _, summary = sess.run([train_step, summary_op],
+                                  {X: batch_x, Y_: batch_y, pkeep: 0.75,
+                                   lr: learning_rate})
             writer.add_summary(summary, epoch * batch_count + i)
         print("Epoch: ", epoch)
     # 0.9659
-    print("Accuracy: ", accuracy.eval(feed_dict={X: mnist.test.images, Y_: mnist.test.labels, pkeep: 0.75}))
+    print("Accuracy: ", accuracy.eval(feed_dict={X: mnist.test.images,
+                                                 Y_: mnist.test.labels, pkeep: 0.75}))
     print("done")
 

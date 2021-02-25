@@ -4,7 +4,7 @@ import input_data
 import numpy as np
 mnist = input_data.read_data_sets("MNIST_data", one_hot=True)
 __input=mnist
-
+#mnist数据格式研究
 def printMNIST():
     print(mnist)
     print(mnist.train.images.shape) #(55000, 784)
