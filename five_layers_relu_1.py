@@ -47,6 +47,7 @@ cross_entropy = tf.reduce_mean(cross_entropy)*100
 
 
 correct_prediction = tf.equal(tf.argmax(Y, 1), tf.argmax(Y_, 1))
+#均方法差
 accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
 
