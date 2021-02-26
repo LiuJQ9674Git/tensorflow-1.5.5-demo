@@ -9,6 +9,9 @@ batch_size = 100
 learning_rate = 0.5
 training_epochs = 10
 
+max_learning_rate = 0.003
+min_learning_rate = 0.0001
+decay_speed = 2000
 # 数据集
 mnist = input_data.read_data_sets("MNIST_data",one_hot=True)
 
@@ -82,9 +85,7 @@ with tf.Session() as sess:
             batch_x, batch_y = mnist.train.next_batch(batch_size)
             # 读取数据为(10000, 784),需要转换为(?, 28, 28, 1)
             batch_x = batch_x.reshape(-1, 28, 28, 1)
-            max_learning_rate = 0.003
-            min_learning_rate = 0.0001
-            decay_speed = 2000 
+
             learning_rate = min_learning_rate+\
                             (max_learning_rate - min_learning_rate)\
                             * math.exp(-i/decay_speed)

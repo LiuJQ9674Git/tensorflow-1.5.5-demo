@@ -5,7 +5,7 @@ import math
 logs_path = 'log_simple_stats_5_lyers_dropout'
 batch_size = 100
 learning_rate = 0.5
-training_epochs = 10
+training_epochs = 100 #0.9744
 
 mnist = input_data.read_data_sets("MNIST_data",one_hot=True)
 
@@ -82,7 +82,7 @@ with tf.Session() as sess:
                                    lr: learning_rate})
             writer.add_summary(summary, epoch * batch_count + i)
         print("Epoch: ", epoch)
-    # 0.9659
+    # 0.9659 #0.9744
     print("Accuracy: ", accuracy.eval(feed_dict={X: mnist.test.images,
                                                  Y_: mnist.test.labels, pkeep: 0.75}))
     print("done")
