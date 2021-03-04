@@ -1,4 +1,4 @@
-# 基本语法
+# 列表解析 基本语法
 # [expression for iter_val in iterable]
 # [expression for iter_val in iterable if cond_expr]
 li = []
@@ -52,3 +52,4 @@ print(b)
 a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 b = {i for i in a if i > 5}
 print(b)
+

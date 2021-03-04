@@ -11,17 +11,23 @@ def init_weights(shape):
 
 
 def model(X, w, w2, w3, w4, w_o, p_keep_conv, p_keep_hidden):
-
+    # 第一维和最后一维的步长一定总为1，因为第一维代表图像数量，最后一维代表输入通道。
+    # 参数padding被设置为SAME，意为输入图像边界被0填充，以保证输出大小一致
     conv1 = tf.nn.conv2d(X, w,\
                          strides=[1, 1, 1, 1],\
                          padding='SAME')
-
+    # 然后，将conv1层传递给一个relu层。这会计算每个输入像素x的max(x, 0)函数，
+    # 为公式 增添一些非线性，使我们能够学习出更加复杂的函数:
     conv1_a = tf.nn.relu(conv1)
+    # 使用tf.nn.max_pool操作符对得出的结果层进行池化操作.
+    # 这是一个2 × 2最大池化操作，意为使用2 × 2的窗，选择每个窗中的最大值。
+    # 然后移动两个像素，进入下一个窗继续该操作。
     conv1 = tf.nn.max_pool(conv1_a, ksize=[1, 2, 2, 1]\
                         ,strides=[1, 2, 2, 1],\
                         padding='SAME')
+    # 为减小过拟合，使用tf.nn.dropout()函数，将conv1层和p_keep_conv概率值传入其中:
     conv1 = tf.nn.dropout(conv1, p_keep_conv)
-
+    # 可以看到，接下来的两个卷积层conv2和conv3，定义方式和conv1相同:
     conv2 = tf.nn.conv2d(conv1, w2,\
                          strides=[1, 1, 1, 1],\
                          padding='SAME')
@@ -72,7 +78,7 @@ w = init_weights([3, 3, 1, 32])       # 3x3x1 conv, 32 outputs
 w2 = init_weights([3, 3, 32, 64])     # 3x3x32 conv, 64 outputs
 w3 = init_weights([3, 3, 64, 128])    # 3x3x32 conv, 128 outputs
 w4 = init_weights([128 * 4 * 4, 625]) # FC 128 * 4 * 4 inputs, 625 outputs
-w_o = init_weights([625, num_classes])         # FC 625 inputs, 10 outputs (labels)
+w_o = init_weights([625, num_classes])# FC 625 inputs, 10 outputs (labels)
 
 p_keep_conv = tf.placeholder("float")
 p_keep_hidden = tf.placeholder("float")

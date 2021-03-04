@@ -36,26 +36,30 @@ W1 = tf.Variable(tf.truncated_normal([784, L], stddev=0.1))
 B1 = tf.Variable(tf.ones([L])/10)
 # 第一层通过sigmoid激活函数，将自己的输出传给第二层:
 XX = tf.reshape(X, [-1, 784])
+# 向前传播算法
 Y1 = tf.nn.relu(tf.matmul(XX, W1) + B1)
 
 W2 = tf.Variable(tf.truncated_normal([L, M], stddev=0.1))
 B2 = tf.Variable(tf.ones([M])/10)
-Y2 = tf.nn.relu(tf.matmul(Y1, W2) + B2)
+Y2 = tf.nn.relu(tf.matmul(Y1, W2) + B2) #矩阵中两个元素相乘
 
 W3 = tf.Variable(tf.truncated_normal([M, N], stddev=0.1))
 B3 = tf.Variable(tf.ones([N])/10)
-Y3 = tf.nn.relu(tf.matmul(Y2, W3) + B3)
+Y3 = tf.nn.relu(tf.matmul(Y2, W3) + B3) #矩阵乘法
 
 W4 = tf.Variable(tf.truncated_normal([N, O], stddev=0.1))
 B4 = tf.Variable(tf.ones([O])/10)
-Y4 = tf.nn.relu(tf.matmul(Y3, W4) + B4)
+Y4 = tf.nn.relu(tf.matmul(Y3, W4) + B4) #矩阵乘法
 
 W5 = tf.Variable(tf.truncated_normal([O, 10], stddev=0.1))
 B5 = tf.Variable(tf.zeros([10]))
-#ReLU的运算速 度很快，因为它不需要进行指数运算，这一点与sigmoid和tanh等激活函数不同。
+# ReLU的运算速 度很快，因为它不需要进行指数运算，这一点与sigmoid和tanh等激活函数不同。
 Ylogits = tf.matmul(Y4, W5) + B5
+
+# 损失函数
 Y = tf.nn.softmax(Ylogits)
 
+# # 交差熵计算
 cross_entropy = tf.nn.softmax_cross_entropy_with_logits(logits=Ylogits, labels=Y_)
 cross_entropy = tf.reduce_mean(cross_entropy)*100
 

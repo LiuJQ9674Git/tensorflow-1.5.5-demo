@@ -5,7 +5,7 @@ import math
 logs_path = 'log_simple_stats_5_lyers_dropout'
 batch_size = 100
 learning_rate = 0.5
-training_epochs = 100 #0.9744
+training_epochs = 10 #0.9744
 
 mnist = input_data.read_data_sets("MNIST_data",one_hot=True)
 

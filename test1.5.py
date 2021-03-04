@@ -7,6 +7,12 @@ b = tf.compat.v1.placeholder("float")
 
 y = tf.multiply(a, b)
 
+# 乘法
+v1=tf.constant([[1.0,2.0],[3.0,4.0]])
+v2=tf.constant([[6.0,6.0],[7.0,8.0]])
+
+print((v1*v2)) #[21.0, 7.0]
+
 sess = tf.compat.v1.Session()
 #9.0
 print(sess.run(y, feed_dict={a: 3, b: 3}))
@@ -99,3 +105,4 @@ output = tf.multiply(input1, input2)
 with tf.Session() as sess:
     #[array([14.], dtype=float32)]
     print(sess.run([output], feed_dict={input1:[7.], input2:[2.]}))
+

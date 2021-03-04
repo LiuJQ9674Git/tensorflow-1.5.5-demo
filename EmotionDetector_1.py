@@ -6,7 +6,8 @@ import EmotionDetectorUtils
 
 """
 lib_path = os.path.realpath(
-    os.path.abspath(os.path.join(os.path.split(inspect.getfile(inspect.currentframe()))[0], "..")))
+    os.path.abspath(os.path.join(os.path.split(
+    inspect.getfile(inspect.currentframe()))[0], "..")))
 if lib_path not in sys.path:
     sys.path.insert(0, lib_path)
 """
@@ -14,7 +15,8 @@ if lib_path not in sys.path:
 
 FLAGS = tf.flags.FLAGS
 tf.flags.DEFINE_string("data_dir", "EmotionDetector/", "Path to data files")
-tf.flags.DEFINE_string("logs_dir", "logs/EmotionDetector_logs/", "Path to where log files are to be saved")
+tf.flags.DEFINE_string("logs_dir", "logs/EmotionDetector_logs/",
+                       "Path to where log files are to be saved")
 tf.flags.DEFINE_string("mode", "train", "mode: train (Default)/ test")
 
 BATCH_SIZE = 128
@@ -116,7 +118,8 @@ biases = {
 }
 
 def loss(pred, label):
-    cross_entropy_loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=pred, labels=label))
+    cross_entropy_loss = tf.reduce_mean(
+        tf.nn.softmax_cross_entropy_with_logits(logits=pred, labels=label))
     tf.summary.scalar('Entropy', cross_entropy_loss)
     reg_losses = tf.add_n(tf.get_collection("losses"))
     tf.summary.scalar('Reg_loss', reg_losses)
@@ -135,7 +138,8 @@ def get_next_batch(images, labels, step):
 
 
 def main(argv=None):
-    train_images, train_labels, valid_images, valid_labels, test_images = EmotionDetectorUtils.read_data(FLAGS.data_dir)
+    train_images, train_labels, valid_images, valid_labels, test_images = \
+        EmotionDetectorUtils.read_data(FLAGS.data_dir)
     print("Train size: %s" % train_images.shape[0])
     print('Validation size: %s' % valid_images.shape[0])
     print("Test size: %s" % test_images.shape[0])

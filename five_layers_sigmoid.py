@@ -25,6 +25,7 @@ Y_ = tf.placeholder(tf.float32, [None, 10])
 W1 = tf.Variable(tf.truncated_normal([784, L], stddev=0.1)) #L=200
 B1 = tf.Variable(tf.zeros([L]))
 # 第一层通过sigmoid激活函数，将自己的输出传给第二层:
+# 向前传播算法
 Y1 = tf.nn.sigmoid(tf.matmul(XX, W1) + B1)
 
 # 第二层接收第一层的输出Y1，并将其与W2权重连接组合，再加上对应的B2偏差张量:
@@ -37,7 +38,7 @@ Y2 = tf.nn.sigmoid(tf.matmul(Y1, W2) + B2)
 W3 = tf.Variable(tf.truncated_normal([M, N], stddev=0.1))  #N=60
 B3 = tf.Variable(tf.zeros([N]))
 # 第三层通过sigmoid激活函数，将输出传给第四层:
-Y3 = tf.nn.sigmoid(tf.matmul(Y2, W3) + B3)
+Y3 = tf.nn.sigmoid(tf.matmul(Y2, W3) + B3) #矩阵乘法
 
 # 第四层接收第三层的输出Y3，与W4权重连接组合起来，并与对应的B4偏差张量相加:
 W4 = tf.Variable(tf.truncated_normal([N, O], stddev=0.1)) #O=30
@@ -48,10 +49,14 @@ Y4 = tf.nn.sigmoid(tf.matmul(Y3, W4) + B4)
 # 第五层将从第四层接收O = 30的激励作为输入，这些输入会通过softmax激活函数，转化为 每个数字对应的概率:
 W5 = tf.Variable(tf.truncated_normal([O, 10], stddev=0.1))
 B5 = tf.Variable(tf.zeros([10]))
+# 向前传播
 Ylogits = tf.matmul(Y4, W5) + B5
+
+# 损失函数
 Y = tf.nn.softmax(Ylogits)
 
 # 损失函数为，目标与softmax激活函数产生的结果之间的交叉熵cross-entropy
+# 交差熵计算
 cross_entropy = tf.nn.softmax_cross_entropy_with_logits(logits=Ylogits, labels=Y_)
 cross_entropy = tf.reduce_mean(cross_entropy)*100
 
